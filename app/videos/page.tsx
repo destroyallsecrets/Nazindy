@@ -6,7 +6,7 @@ import FacebookSDKProvider from "@/components/facebook-sdk-provider"
 import VideoPlayer, { VideoItem } from "@/components/video-player"
 import FacebookVideoLayout, { VideoCategory } from "@/components/facebook-video-layout"
 import axios from "axios"
-import cheerio from "cheerio"
+import * as cheerio from "cheerio"
 
 // Function to fetch videos using web scraping
 async function fetchFacebookVideos(): Promise<VideoCategory[]> {
@@ -20,6 +20,7 @@ async function fetchFacebookVideos(): Promise<VideoCategory[]> {
     const url = $(element).find("a").attr("href");
     const date = $(element).find("span").text();
     const description = $(element).find("p").text();
+    const thumbnail = $(element).find("img").attr("src"); // Fetch thumbnail URL
     
     videos.push({
       id: `video${index}`,
@@ -27,6 +28,7 @@ async function fetchFacebookVideos(): Promise<VideoCategory[]> {
       date,
       url: `https://www.facebook.com${url}`,
       description,
+      thumbnail, // Add thumbnail to video item
     });
   });
 
