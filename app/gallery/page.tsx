@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Facebook } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import FacebookEmbed from "@/components/facebook/facebook-embed"
+import FacebookEmbed from "@/components/facebook-embed"
 
 export default function GalleryPage() {
   return (

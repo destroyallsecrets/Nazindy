@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Calendar, MapPin, Video, Book, Users, Music, Phone, Mail, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import FacebookEmbed from "@/components/facebook/facebook-embed"
+import FacebookEmbed from "@/components/facebook-embed"
 
 export default function Home() {
   return (

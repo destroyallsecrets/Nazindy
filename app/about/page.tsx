@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import FacebookFeed from "@/components/facebook/facebook-feed"
+import FacebookFeed from "@/components/facebook-feed"
 
 export default function AboutPage() {
   return (
