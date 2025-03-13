@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
-import FacebookVideoEmbed from "@/components/facebook/facebook-video-embed"
+import FacebookVideoEmbed from "@/components/facebook-video-embed"
 
 // Featured videos from Facebook
 const featuredVideos = [
