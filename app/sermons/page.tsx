@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Search, Calendar, Clock, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import FacebookEmbed from "@/components/facebook/facebook-embed"
+import FacebookVideoEmbed from "@/components/facebook-video-embed"
 
 export default function SermonsPage() {
   return (

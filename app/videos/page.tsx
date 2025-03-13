@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import FacebookVideoEmbed from "@/components/facebook/facebook-video-embed"
+import FacebookVideoEmbed from "@/components/facebook-video-embed"
 
 // Define video categories and their videos
 const videoCategories = [

@@ -2,6 +2,14 @@
 
 import { useEffect, useRef } from "react"
 
+// Add global declaration for Facebook SDK
+declare global {
+  interface Window {
+    FB: any
+    fbAsyncInit: () => void
+  }
+}
+
 interface FacebookVideoEmbedProps {
   videoUrl: string
   width?: number | string
