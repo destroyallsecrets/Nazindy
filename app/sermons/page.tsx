@@ -4,6 +4,7 @@ import { Search, Calendar, Clock, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import FacebookVideoEmbed from "@/components/facebook-video-embed"
+import FacebookEmbed from "@/components/facebook-embed"
 
 export default function SermonsPage() {
   return (
