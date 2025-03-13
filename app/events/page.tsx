@@ -1,7 +1,6 @@
-import Link from "next/link"
 import Image from "next/image"
-import { Calendar, Clock, MapPin } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import FacebookEmbed from "@/components/facebook/facebook-embed"
 
 export default function EventsPage() {
   return (
@@ -46,96 +45,28 @@ export default function EventsPage() {
             </div>
           </div>
 
-          {/* Event Listings */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Event Card 1 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Sunday Service" fill className="object-cover" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 17, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Sunday Worship Service</h3>
-                <p className="text-muted-foreground mb-4">
-                  Join us for a powerful time of worship, prayer, and teaching from God's Word.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-2">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">10:30 AM - 12:00 PM</span>
-                </div>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <MapPin className="h-4 w-4 mr-2" />
-                  <span className="text-sm">Main Sanctuary</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View Details
-                </Button>
-              </div>
-            </div>
-
-            {/* Event Card 2 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Bible Study" fill className="object-cover" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 19, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Wednesday Bible Study</h3>
-                <p className="text-muted-foreground mb-4">
-                  Dive deeper into God's Word with our midweek Bible study and prayer meeting.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-2">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">7:00 PM - 8:30 PM</span>
-                </div>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <MapPin className="h-4 w-4 mr-2" />
-                  <span className="text-sm">Fellowship Hall</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View Details
-                </Button>
-              </div>
-            </div>
-
-            {/* Event Card 3 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Youth Ministry" fill className="object-cover" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 21, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Youth Fellowship Night</h3>
-                <p className="text-muted-foreground mb-4">
-                  A special evening for our youth to connect, have fun, and grow in their faith together.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-2">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">6:00 PM - 8:00 PM</span>
-                </div>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <MapPin className="h-4 w-4 mr-2" />
-                  <span className="text-sm">Youth Center</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  View Details
-                </Button>
-              </div>
+          {/* Facebook Events Integration */}
+          <div className="mb-8">
+            <h3 className="text-2xl font-bold mb-6">Facebook Events</h3>
+            <div className="flex justify-center">
+              <FacebookEmbed
+                url="https://www.facebook.com/NazareneMissionaryBaptistChurch"
+                width={800}
+                height={600}
+                tabs="events"
+              />
             </div>
           </div>
 
           <div className="text-center mt-10">
             <Button asChild>
-              <Link href="/events/all">View All Events</Link>
+              <a
+                href="https://www.facebook.com/NazareneMissionaryBaptistChurch/events"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View All Events on Facebook
+              </a>
             </Button>
           </div>
         </div>

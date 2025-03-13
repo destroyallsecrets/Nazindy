@@ -82,19 +82,15 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="text-gray-400">
                 <span className="block font-medium text-white">Sunday School</span>
-                9:00 AM - 10:15 AM
+                10:00 AM
               </li>
               <li className="text-gray-400">
                 <span className="block font-medium text-white">Sunday Worship</span>
-                10:30 AM - 12:00 PM
+                11:00 AM
               </li>
               <li className="text-gray-400">
                 <span className="block font-medium text-white">Wednesday Bible Study</span>
-                7:00 PM - 8:30 PM
-              </li>
-              <li className="text-gray-400">
-                <span className="block font-medium text-white">Youth Ministry</span>
-                Fridays at 6:00 PM
+                7:00 PM
               </li>
             </ul>
           </div>
@@ -106,21 +102,21 @@ export default function Footer() {
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-gray-400 mr-2 mt-0.5" />
                 <span className="text-gray-400">
-                  123 Church Street
+                  3505 E. 38th Street
                   <br />
-                  Indianapolis, IN 46201
+                  Indianapolis, IN, United States
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 text-gray-400 mr-2" />
-                <a href="tel:+13175551234" className="text-gray-400 hover:text-white">
-                  (317) 555-1234
+                <a href="tel:+13175471404" className="text-gray-400 hover:text-white">
+                  (317) 547-1404
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 text-gray-400 mr-2" />
-                <a href="mailto:info@nazindy.org" className="text-gray-400 hover:text-white">
-                  info@nazindy.org
+                <a href="mailto:NazareneChurch3505@gmail.com" className="text-gray-400 hover:text-white">
+                  NazareneChurch3505@gmail.com
                 </a>
               </li>
             </ul>

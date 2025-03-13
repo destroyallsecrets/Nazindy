@@ -1,13 +1,15 @@
 import Link from "next/link"
 import Image from "next/image"
-import { ChevronRight, Calendar, Clock, MapPin } from "lucide-react"
+import { Calendar, MapPin, Video, Book, Users, Music, Phone, Mail, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import FacebookEmbed from "@/components/facebook/facebook-embed"
 
 export default function Home() {
   return (
     <main className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video className="w-full h-full object-cover" autoPlay muted loop playsInline>
             <source src="/placeholder.svg?height=1080&width=1920" type="video/mp4" />
@@ -19,263 +21,382 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
             Welcome to Nazarene Missionary Baptist Church
           </h1>
-          <p className="text-xl md:text-2xl text-white/90 mb-8">Join Us This Sunday for Worship and Fellowship</p>
+          <p className="text-xl md:text-2xl text-white/90 mb-8">COME WORSHIP WITH US!</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="text-lg">
-              <MapPin className="mr-2 h-5 w-5" /> Get Directions
+            <Button size="lg" className="text-lg" asChild>
+              <a
+                href="https://maps.google.com/?q=3505+E+38th+St+Indianapolis+IN"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MapPin className="mr-2 h-5 w-5" /> Get Directions
+              </a>
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="text-lg bg-white/10 text-white border-white/20 hover:bg-white/20"
+              asChild
             >
-              <Calendar className="mr-2 h-5 w-5" /> Service Times
+              <Link href="/services">
+                <Calendar className="mr-2 h-5 w-5" /> Service Times
+              </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Upcoming Events Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Quick Access Navigation */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold">Upcoming Events</h2>
-            <Link href="/events" className="text-primary flex items-center hover:underline">
-              View All Events <ChevronRight className="h-4 w-4 ml-1" />
+          <h2 className="text-3xl font-bold mb-8 text-center">Quick Access</h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <Link href="/services" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Calendar className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Services</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Service times and information
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/videos" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Video className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Videos</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Watch our sermons and events
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/sermons" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Book className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Sermons</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Listen to past sermons
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/events" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Calendar className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Events</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Upcoming church events
+                </CardContent>
+              </Card>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 overflow-x-auto pb-4">
-            {/* Event Card 1 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Sunday Service" fill className="object-cover" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mt-4 md:mt-6">
+            <Link href="/ministries" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Users className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Ministries</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Our church ministries
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/about" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Users className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">About Us</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Learn about our church
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/gallery" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <div className="p-4 md:p-6 text-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform"
+                    >
+                      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                      <circle cx="9" cy="9" r="2" />
+                      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                    </svg>
+                    <CardTitle className="text-lg md:text-xl">Gallery</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Photos from our church
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/contact" className="group">
+              <Card className="h-full transition-all hover:shadow-md hover:border-primary/50">
+                <CardHeader className="p-4 md:p-6 text-center">
+                  <Phone className="h-10 w-10 mx-auto text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <CardTitle className="text-lg md:text-xl">Contact</CardTitle>
+                </CardHeader>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 text-center text-sm text-muted-foreground">
+                  Get in touch with us
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Times */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Service Times</h2>
+              <div className="space-y-6">
+                <div className="flex items-start">
+                  <div className="bg-primary/10 p-3 rounded-full mr-4">
+                    <Calendar className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Sunday School</h3>
+                    <p className="text-muted-foreground">10:00 AM</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-primary/10 p-3 rounded-full mr-4">
+                    <Music className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Sunday Worship</h3>
+                    <p className="text-muted-foreground">11:00 AM</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-primary/10 p-3 rounded-full mr-4">
+                    <Book className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold">Wednesday Bible Study</h3>
+                    <p className="text-muted-foreground">7:00 PM</p>
+                  </div>
+                </div>
               </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 17, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Sunday Worship Service</h3>
-                <p className="text-muted-foreground mb-4">
-                  Join us for a powerful time of worship, prayer, and teaching from God's Word.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">10:30 AM - 12:00 PM</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  Learn More
+
+              <div className="mt-8">
+                <Button asChild>
+                  <Link href="/services">
+                    View All Services <ChevronRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </div>
             </div>
 
-            {/* Event Card 2 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Bible Study" fill className="object-cover" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 19, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Wednesday Bible Study</h3>
-                <p className="text-muted-foreground mb-4">
-                  Dive deeper into God's Word with our midweek Bible study and prayer meeting.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">7:00 PM - 8:30 PM</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  Learn More
-                </Button>
-              </div>
-            </div>
-
-            {/* Event Card 3 */}
-            <div className="rounded-lg overflow-hidden shadow-md bg-white border border-gray-100 hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image src="/placeholder.svg?height=400&width=600" alt="Youth Ministry" fill className="object-cover" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center text-primary mb-2">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span className="text-sm">March 21, 2025</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">Youth Fellowship Night</h3>
-                <p className="text-muted-foreground mb-4">
-                  A special evening for our youth to connect, have fun, and grow in their faith together.
-                </p>
-                <div className="flex items-center text-muted-foreground mb-4">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span className="text-sm">6:00 PM - 8:00 PM</span>
-                </div>
-                <Button variant="outline" className="w-full">
-                  Learn More
-                </Button>
-              </div>
+            <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
+              <Image src="/placeholder.svg?height=600&width=800" alt="Church Service" fill className="object-cover" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Ministries Overview Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      {/* Latest Videos */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Our Ministries</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover the various ways you can connect, serve, and grow within our church community.
-            </p>
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl font-bold">Latest Videos</h2>
+            <Link href="/videos" className="text-primary flex items-center hover:underline">
+              View All Videos <ChevronRight className="h-4 w-4 ml-1" />
+            </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Ministry Card 1 */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Worship Ministry"
-                  fill
-                  className="object-cover"
-                />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="overflow-hidden">
+              <div className="aspect-video bg-gray-100">
+                <iframe
+                  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F658991209844719&show_text=false"
+                  className="w-full h-full border-none overflow-hidden"
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                ></iframe>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Worship Ministry</h3>
-                <p className="text-muted-foreground mb-4">
-                  Our worship team leads the congregation in praise and worship through music and song.
-                </p>
-                <Button variant="outline" className="w-full">
-                  Learn More
-                </Button>
-              </div>
-            </div>
+              <CardContent className="p-4">
+                <h3 className="text-xl font-bold mb-1">Sunday Sermon</h3>
+                <p className="text-muted-foreground text-sm">April 7, 2024</p>
+              </CardContent>
+            </Card>
 
-            {/* Ministry Card 2 */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Children's Ministry"
-                  fill
-                  className="object-cover"
-                />
+            <Card className="overflow-hidden">
+              <div className="aspect-video bg-gray-100">
+                <iframe
+                  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F&show_text=false"
+                  className="w-full h-full border-none overflow-hidden"
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                ></iframe>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Children's Ministry</h3>
-                <p className="text-muted-foreground mb-4">
-                  Nurturing the spiritual growth of our children through age-appropriate teaching and activities.
-                </p>
-                <Button variant="outline" className="w-full">
-                  Learn More
-                </Button>
-              </div>
-            </div>
+              <CardContent className="p-4">
+                <h3 className="text-xl font-bold mb-1">Bible Study</h3>
+                <p className="text-muted-foreground text-sm">April 3, 2024</p>
+              </CardContent>
+            </Card>
 
-            {/* Ministry Card 3 */}
-            <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-              <div className="relative h-48">
-                <Image
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Outreach Ministry"
-                  fill
-                  className="object-cover"
-                />
+            <Card className="overflow-hidden">
+              <div className="aspect-video bg-gray-100">
+                <iframe
+                  src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F&show_text=false"
+                  className="w-full h-full border-none overflow-hidden"
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                ></iframe>
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Outreach Ministry</h3>
-                <p className="text-muted-foreground mb-4">
-                  Serving our local community and sharing God's love through various outreach programs.
-                </p>
-                <Button variant="outline" className="w-full">
-                  Learn More
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-10">
-            <Button size="lg" asChild>
-              <Link href="/ministries">View All Ministries</Link>
-            </Button>
+              <CardContent className="p-4">
+                <h3 className="text-xl font-bold mb-1">Special Event</h3>
+                <p className="text-muted-foreground text-sm">March 31, 2024</p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Contact Information */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Testimonials</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Hear from our church members about how God is working in their lives.
-            </p>
-          </div>
+          <h2 className="text-3xl font-bold mb-8 text-center">Contact Information</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Testimonial 1 */}
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=100&width=100" alt="Sarah J." fill className="object-cover" />
-                </div>
-                <div>
-                  <h4 className="font-bold">Sarah J.</h4>
-                  <p className="text-sm text-muted-foreground">Member since 2018</p>
-                </div>
-              </div>
-              <p className="italic text-muted-foreground">
-                "Finding Nazarene Missionary Baptist Church has been a blessing. The community here has supported me
-                through difficult times and celebrated with me in joyful ones."
-              </p>
-            </div>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card>
+              <CardHeader className="text-center">
+                <MapPin className="h-8 w-8 mx-auto text-primary mb-2" />
+                <CardTitle>Address</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground">
+                  3505 E. 38th Street
+                  <br />
+                  Indianapolis, IN, United States
+                </p>
+                <Button variant="link" asChild className="mt-2">
+                  <a
+                    href="https://maps.google.com/?q=3505+E+38th+St+Indianapolis+IN"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Get Directions
+                  </a>
+                </Button>
+              </CardContent>
+            </Card>
 
-            {/* Testimonial 2 */}
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=100&width=100" alt="Michael T." fill className="object-cover" />
-                </div>
-                <div>
-                  <h4 className="font-bold">Michael T.</h4>
-                  <p className="text-sm text-muted-foreground">Member since 2020</p>
-                </div>
-              </div>
-              <p className="italic text-muted-foreground">
-                "The teaching at this church has deepened my understanding of God's Word and transformed my relationship
-                with Christ. I'm grateful for our pastor's wisdom."
-              </p>
-            </div>
+            <Card>
+              <CardHeader className="text-center">
+                <Phone className="h-8 w-8 mx-auto text-primary mb-2" />
+                <CardTitle>Phone</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground">(317) 547-1404</p>
+                <Button variant="link" asChild className="mt-2">
+                  <a href="tel:+13175471404">Call Us</a>
+                </Button>
+              </CardContent>
+            </Card>
 
-            {/* Testimonial 3 */}
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="flex items-center mb-4">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden mr-4">
-                  <Image src="/placeholder.svg?height=100&width=100" alt="Lisa R." fill className="object-cover" />
-                </div>
-                <div>
-                  <h4 className="font-bold">Lisa R.</h4>
-                  <p className="text-sm text-muted-foreground">Member since 2015</p>
-                </div>
-              </div>
-              <p className="italic text-muted-foreground">
-                "My children love the youth programs, and I've found meaningful ways to serve. This church truly feels
-                like family to us."
-              </p>
-            </div>
+            <Card>
+              <CardHeader className="text-center">
+                <Mail className="h-8 w-8 mx-auto text-primary mb-2" />
+                <CardTitle>Email</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-muted-foreground">NazareneChurch3505@gmail.com</p>
+                <Button variant="link" asChild className="mt-2">
+                  <a href="mailto:NazareneChurch3505@gmail.com">Email Us</a>
+                </Button>
+              </CardContent>
+            </Card>
           </div>
 
           <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              <Link href="/testimonials">Read More Stories</Link>
+            <Button size="lg" asChild>
+              <Link href="/contact">
+                Contact Us <ChevronRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
+      {/* Facebook Feed */}
+      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div>
+              <h2 className="text-3xl font-bold mb-6">Connect With Us</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Follow our Facebook page to stay updated with church announcements, events, and inspirational messages.
+              </p>
+
+              <div className="mt-8">
+                <Button asChild>
+                  <a
+                    href="https://www.facebook.com/NazareneMissionaryBaptistChurch"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center"
+                  >
+                    <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fillRule="evenodd"
+                        d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Visit Our Facebook Page
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <FacebookEmbed
+                url="https://www.facebook.com/NazareneMissionaryBaptistChurch"
+                width={500}
+                height={600}
+                tabs="timeline,events"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-4">Join Us This Sunday</h2>
@@ -283,11 +404,19 @@ export default function Home() {
             We'd love to welcome you to our church family. Come experience the love of Christ in our community.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-lg">
-              <MapPin className="mr-2 h-5 w-5" /> Get Directions
+            <Button size="lg" variant="secondary" className="text-lg" asChild>
+              <a
+                href="https://maps.google.com/?q=3505+E+38th+St+Indianapolis+IN"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <MapPin className="mr-2 h-5 w-5" /> Get Directions
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="text-lg border-white/20 hover:bg-white/10">
-              <Calendar className="mr-2 h-5 w-5" /> Service Times
+            <Button size="lg" variant="outline" className="text-lg border-white/20 hover:bg-white/10" asChild>
+              <Link href="/services">
+                <Calendar className="mr-2 h-5 w-5" /> Service Times
+              </Link>
             </Button>
           </div>
         </div>

@@ -53,6 +53,16 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        church: {
+          navy: "#1A237E",
+          blue: {
+            light: "#90CAF9",
+            DEFAULT: "#1E88E5",
+            dark: "#0D47A1",
+          },
+          gold: "#FFD700",
+          silver: "#9E9E9E",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

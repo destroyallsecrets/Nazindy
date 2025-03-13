@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   title: "Nazarene Missionary Baptist Church | Indianapolis",
   description:
     "Welcome to Nazarene Missionary Baptist Church in Indianapolis. Join us for worship, fellowship, and spiritual growth.",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({
@@ -33,6 +32,3 @@ export default function RootLayout({
   )
 }
 
-
-
-import './globals.css'
