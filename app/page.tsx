@@ -10,11 +10,16 @@ export default function Home() {
     <main className="flex flex-col min-h-screen">
       {/* Hero Section */}
       <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <video className="w-full h-full object-cover" autoPlay muted loop playsInline>
-            <source src="/placeholder.svg?height=1080&width=1920" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {/* Background image */}
+          <Image 
+            src="https://scontent-ord5-2.xx.fbcdn.net/v/t39.30808-6/308008277_381954504147129_7398807224246586447_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=Cs2C1aerPVsQ7kNvgHKiKDd&_nc_oc=Adg9bPJzngSYBMRChGfIvL-7YpuiPwQkSPomCSTDuSTrgQNzSQUepeB0u9PIejTG8emuXQ0KtRnPH3RtOM_d7KSd&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&_nc_gid=AU74M8kmksljW30RswwPZxG&oh=00_AYGvePUN7gdjc09iaTq8fPrkHuSLEl6mfU-mWaEFNNXwGA&oe=67D8838D"
+            alt="Nazarene Missionary Baptist Church" 
+            fill
+            priority
+            className="object-cover"
+          />
+          {/* Overlay for better text contrast */}
           <div className="absolute inset-0 bg-black/50" />
         </div>
         <div className="relative z-10 text-center px-4 sm:px-6 max-w-4xl">
