@@ -170,9 +170,10 @@ export default function VideosPage() {
       <div id="fb-root"></div>
       <Script
         id="facebook-jssdk"
-        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v22.0"
         strategy="lazyOnload"
         onLoad={initFacebookSDK}
+        crossOrigin="anonymous"
       />
 
       {/* Hero Section */}
@@ -248,7 +249,13 @@ export default function VideosPage() {
                       {category.videos.map((video) => (
                         <div key={video.id} className="space-y-4">
                           <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                            <FacebookVideoEmbed videoUrl={video.url} height="100%" showText={false} />
+                            <FacebookVideoEmbed 
+                              videoUrl={video.url} 
+                              height="100%" 
+                              showText={false}
+                              title={video.title}
+                              description={`${category.title} - ${video.date}`}
+                            />
                           </div>
                           <div>
                             <h3 className="text-xl font-bold">{video.title}</h3>

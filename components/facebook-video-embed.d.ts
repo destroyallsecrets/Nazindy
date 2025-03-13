@@ -11,6 +11,8 @@ declare module '@/components/facebook-video-embed' {
     showCaptions?: boolean;
     lazy?: boolean;
     className?: string;
+    title?: string;
+    description?: string;
   }
   
   export default function FacebookVideoEmbed(props: FacebookVideoEmbedProps): ReactElement;

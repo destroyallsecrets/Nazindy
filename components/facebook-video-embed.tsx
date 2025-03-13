@@ -20,6 +20,8 @@ interface FacebookVideoEmbedProps {
   showCaptions?: boolean
   lazy?: boolean
   className?: string
+  title?: string
+  description?: string
 }
 
 export default function FacebookVideoEmbed({
@@ -32,6 +34,8 @@ export default function FacebookVideoEmbed({
   showCaptions = false,
   lazy = true,
   className = "",
+  title = "Facebook Video",
+  description = "",
 }: FacebookVideoEmbedProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -60,6 +64,17 @@ export default function FacebookVideoEmbed({
     }
   }, [videoUrl])
 
+  // Extract the page name from the URL for fallback content
+  const pageName = "Nazarene MBC INDY"
+  
+  // Get current date for fallback content
+  const formatDate = () => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    const now = new Date()
+    return `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`
+  }
+
   return (
     <div ref={containerRef} className={`fb-video-container overflow-hidden rounded-lg ${className}`}>
       <div
@@ -74,8 +89,10 @@ export default function FacebookVideoEmbed({
         data-lazy={lazy}
       >
         <div className="fb-xfbml-parse-ignore">
-          <blockquote cite={videoUrl}>
-            <a href={videoUrl}>Loading Facebook Video...</a>
+          <blockquote cite={videoUrl} className="fb-xfbml-parse-ignore">
+            <a href={videoUrl}>{title}</a>
+            {description && <p>{description}</p>}
+            Posted by <a href="https://www.facebook.com/NazareneMissionaryBaptistChurch">{pageName}</a> on {formatDate()}
           </blockquote>
         </div>
       </div>
