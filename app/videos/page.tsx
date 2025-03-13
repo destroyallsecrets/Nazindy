@@ -70,7 +70,7 @@ const videoCategories = [
         id: "event2",
         title: "Church Anniversary Celebration",
         date: "February 15, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/0246813579",
+        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
       },
     ],
   },
