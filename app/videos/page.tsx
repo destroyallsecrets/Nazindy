@@ -5,97 +5,49 @@ import { Button } from "@/components/ui/button"
 import FacebookSDKProvider from "@/components/facebook-sdk-provider"
 import VideoPlayer, { VideoItem } from "@/components/video-player"
 import FacebookVideoLayout, { VideoCategory } from "@/components/facebook-video-layout"
+import axios from "axios"
+import cheerio from "cheerio"
 
-// Define video categories and their videos
-const videoCategories: VideoCategory[] = [
-  {
-    id: "sermons",
-    title: "Sunday Sermons",
-    description: "Weekly sermons from our Sunday worship services",
-    videos: [
-      {
-        id: "sermon1",
-        title: "The Power of Faith",
-        date: "April 7, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
-      },
-      {
-        id: "sermon2",
-        title: "Walking in God's Purpose",
-        date: "March 31, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/0987654321",
-      },
-      {
-        id: "sermon3",
-        title: "The Grace of God",
-        date: "March 24, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1122334455",
-      },
-    ],
-  },
-  {
-    id: "bible-study",
-    title: "Bible Study",
-    description: "Midweek Bible study sessions",
-    videos: [
-      {
-        id: "biblestudy1",
-        title: "Book of Romans - Part 3",
-        date: "April 3, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/5566778899",
-      },
-      {
-        id: "biblestudy2",
-        title: "Book of Romans - Part 2",
-        date: "March 27, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/9988776655",
-      },
-      {
-        id: "biblestudy3",
-        title: "Bible Study - 2 Peter 1:1-4",
-        date: "April 10, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
-        description: "A study on 2 Peter 1:1-4"
-      },
-    ],
-  },
-  {
-    id: "special-events",
-    title: "Special Events",
-    description: "Special services and church events",
-    videos: [
-      {
-        id: "event1",
-        title: "Easter Sunday Service",
-        date: "March 31, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1357924680",
-      },
-      {
-        id: "event2",
-        title: "Church Anniversary Celebration",
-        date: "February 15, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
-      },
-    ],
-  },
-  {
-    id: "music",
-    title: "Music & Worship",
-    description: "Praise and worship performances",
-    videos: [
-      {
-        id: "music1",
-        title: "Choir Performance - Amazing Grace",
-        date: "March 17, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1472583690",
-      },
-    ],
-  },
-]
+// Function to fetch videos using web scraping
+async function fetchFacebookVideos(): Promise<VideoCategory[]> {
+  const response = await axios.get("https://www.facebook.com/NazareneMissionaryBaptistChurch/videos");
+  const $ = cheerio.load(response.data);
+  
+  const videos: VideoItem[] = [];
+  
+  $("div[data-pagelet='Video']").each((index, element) => {
+    const title = $(element).find("h2").text();
+    const url = $(element).find("a").attr("href");
+    const date = $(element).find("span").text();
+    const description = $(element).find("p").text();
+    
+    videos.push({
+      id: `video${index}`,
+      title,
+      date,
+      url: `https://www.facebook.com${url}`,
+      description,
+    });
+  });
+
+  return [
+    {
+      id: "facebook-videos",
+      title: "Facebook Videos",
+      description: "Videos fetched from Facebook",
+      videos,
+    },
+  ];
+}
 
 export default function VideosPage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
+  const [videoCategories, setVideoCategories] = useState<VideoCategory[]>([])
+
+  useEffect(() => {
+    fetchFacebookVideos().then(setVideoCategories);
+  }, []);
   
   // Get the selected category or all videos if no category selected
   const selectedCategory = selectedCategoryId 
