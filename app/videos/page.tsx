@@ -50,6 +50,13 @@ const videoCategories: VideoCategory[] = [
         date: "March 27, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/9988776655",
       },
+      {
+        id: "biblestudy3",
+        title: "Bible Study - 2 Peter 1:1-4",
+        date: "April 10, 2024",
+        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
+        description: "A study on 2 Peter 1:1-4"
+      },
     ],
   },
   {
