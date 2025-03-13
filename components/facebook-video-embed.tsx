@@ -15,6 +15,10 @@ interface FacebookVideoEmbedProps {
   width?: number | string
   height?: number | string
   showText?: boolean
+  allowFullscreen?: boolean
+  autoplay?: boolean
+  showCaptions?: boolean
+  lazy?: boolean
   className?: string
 }
 
@@ -22,38 +26,39 @@ export default function FacebookVideoEmbed({
   videoUrl,
   width = "100%",
   height = 400,
-  showText = true,
+  showText = false,
+  allowFullscreen = true,
+  autoplay = true,
+  showCaptions = false,
+  lazy = true,
   className = "",
 }: FacebookVideoEmbedProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Load Facebook SDK
-    const loadFacebookSDK = () => {
-      const script = document.createElement("script")
-      script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0"
-      script.async = true
-      script.defer = true
-      script.crossOrigin = "anonymous"
-      document.body.appendChild(script)
-
-      // Initialize FB SDK
-      window.fbAsyncInit = () => {
-        window.FB?.init({
-          xfbml: true,
-          version: "v18.0",
-        })
+    // Parse XFBML when component mounts or videoUrl changes
+    const parseFacebookXFBML = () => {
+      if (window.FB && containerRef.current) {
+        window.FB.XFBML.parse(containerRef.current)
       }
     }
 
-    // Check if FB SDK is already loaded
-    if (!window.FB) {
-      loadFacebookSDK()
-    } else {
-      // If already loaded, parse XFBML
-      window.FB.XFBML.parse(containerRef.current)
+    // Try to parse immediately if FB SDK is already loaded
+    parseFacebookXFBML()
+
+    // Add an event listener to handle FB SDK load event
+    const handleFBLoad = () => {
+      parseFacebookXFBML()
     }
-  }, [])
+
+    // Listen for FB SDK loaded event
+    document.addEventListener('fb-sdk-loaded', handleFBLoad)
+
+    // Clean up
+    return () => {
+      document.removeEventListener('fb-sdk-loaded', handleFBLoad)
+    }
+  }, [videoUrl])
 
   return (
     <div ref={containerRef} className={`fb-video-container overflow-hidden rounded-lg ${className}`}>
@@ -63,9 +68,19 @@ export default function FacebookVideoEmbed({
         data-width={width}
         data-height={height}
         data-show-text={showText}
-        data-allowfullscreen="true"
-      ></div>
+        data-allowfullscreen={allowFullscreen}
+        data-autoplay={autoplay}
+        data-show-captions={showCaptions}
+        data-lazy={lazy}
+      >
+        <div className="fb-xfbml-parse-ignore">
+          <blockquote cite={videoUrl}>
+            <a href={videoUrl}>Loading Facebook Video...</a>
+          </blockquote>
+        </div>
+      </div>
     </div>
   )
 }
+
 

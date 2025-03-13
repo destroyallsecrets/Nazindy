@@ -101,8 +101,22 @@ export default function VideosPage() {
     if (typeof window !== 'undefined' && window.FB) {
       (window.FB as any).XFBML.parse();
       setFbSDKLoaded(true);
+      
+      // Dispatch a custom event to notify components the SDK is loaded
+      const event = new Event('fb-sdk-loaded');
+      document.dispatchEvent(event);
     }
   }, []);
+
+  // Re-parse Facebook embeds when accordion items are opened
+  const handleAccordionValueChange = useCallback((value: string) => {
+    if (typeof window !== 'undefined' && window.FB && fbSDKLoaded) {
+      // Small delay to ensure DOM is updated after accordion expand
+      setTimeout(() => {
+        (window.FB as any).XFBML.parse();
+      }, 100);
+    }
+  }, [fbSDKLoaded]);
 
   // Re-parse Facebook embeds when filtered content changes
   useEffect(() => {
@@ -152,8 +166,10 @@ export default function VideosPage() {
 
   return (
     <main className="min-h-screen">
-      {/* Facebook SDK Script */}
+      {/* Facebook SDK Script - using id for better handling */}
+      <div id="fb-root"></div>
       <Script
+        id="facebook-jssdk"
         src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"
         strategy="lazyOnload"
         onLoad={initFacebookSDK}
@@ -213,7 +229,12 @@ export default function VideosPage() {
       <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="container mx-auto">
           {filteredCategories.length > 0 ? (
-            <Accordion type="single" collapsible className="space-y-6">
+            <Accordion 
+              type="single" 
+              collapsible 
+              className="space-y-6"
+              onValueChange={handleAccordionValueChange}
+            >
               {filteredCategories.map((category) => (
                 <AccordionItem key={category.id} value={category.id} className="border rounded-lg overflow-hidden">
                   <AccordionTrigger className="px-6 py-4 hover:bg-gray-50">

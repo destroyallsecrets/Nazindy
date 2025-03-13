@@ -6,6 +6,10 @@ declare module '@/components/facebook-video-embed' {
     width?: number | string;
     height?: number | string;
     showText?: boolean;
+    allowFullscreen?: boolean;
+    autoplay?: boolean;
+    showCaptions?: boolean;
+    lazy?: boolean;
     className?: string;
   }
   
