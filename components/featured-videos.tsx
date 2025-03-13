@@ -46,6 +46,9 @@ export default function FeaturedVideos() {
                   title={video.title}
                   description={video.title}
                   postDate={video.date}
+                  aspect="horizontal"
+                  autoplay={false}
+                  lazy={true}
                 />
               </div>
               <div>

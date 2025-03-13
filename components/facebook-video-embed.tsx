@@ -1,6 +1,7 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
+import { useFacebookSDK } from "./facebook-sdk-provider"
 
 // Add global declaration for Facebook SDK
 declare global {
@@ -19,6 +20,14 @@ interface FacebookVideoEmbedProps {
   pageUrl?: string
   pageName?: string
   postDate?: string
+  allowFullscreen?: boolean
+  autoplay?: boolean
+  showCaptions?: boolean
+  lazy?: boolean
+  aspect?: "auto" | "square" | "vertical" | "horizontal"
+  videoInfo?: boolean
+  onLoad?: () => void
+  onError?: (error: any) => void
 }
 
 export default function FacebookVideoEmbed({
@@ -30,39 +39,80 @@ export default function FacebookVideoEmbed({
   pageUrl = "https://www.facebook.com/NazareneMissionaryBaptistChurch", 
   pageName = "Nazarene MBC INDY",
   postDate = "Wednesday, March 12, 2025",
+  allowFullscreen = true,
+  autoplay = false,
+  showCaptions = false,
+  lazy = true,
+  aspect = "auto",
+  videoInfo = true,
+  onLoad,
+  onError,
 }: FacebookVideoEmbedProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    // Parse XFBML when component mounts or videoUrl changes
-    if (window.FB && containerRef.current) {
-      window.FB.XFBML.parse(containerRef.current)
+  const { isLoaded, reparse } = useFacebookSDK()
+  const [isVideoParsed, setIsVideoParsed] = useState(false)
+  
+  // Get aspect ratio class
+  const getAspectClass = () => {
+    switch(aspect) {
+      case "square": return "aspect-square";
+      case "vertical": return "aspect-[9/16]";
+      case "horizontal": return "aspect-video";
+      default: return "";
     }
+  }
 
-    // Re-parse when SDK loads
-    const handleFBLoad = () => {
-      if (window.FB && containerRef.current) {
-        window.FB.XFBML.parse(containerRef.current)
+  // Parse the video when FB SDK loads or when videoUrl changes
+  useEffect(() => {
+    const parseVideo = () => {
+      if (isLoaded && containerRef.current) {
+        try {
+          reparse(containerRef.current)
+          setIsVideoParsed(true)
+          onLoad?.()
+        } catch (error) {
+          console.error("Error parsing Facebook video:", error)
+          onError?.(error)
+        }
       }
     }
 
+    if (isLoaded) {
+      parseVideo()
+    }
+
+    // Legacy event listener support
+    const handleFBLoad = () => {
+      parseVideo()
+    }
+
     document.addEventListener('fb-sdk-loaded', handleFBLoad)
-    return () => document.removeEventListener('fb-sdk-loaded', handleFBLoad)
-  }, [videoUrl])
+    return () => {
+      document.removeEventListener('fb-sdk-loaded', handleFBLoad)
+    }
+  }, [isLoaded, videoUrl, reparse, onLoad, onError])
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={`facebook-video-container ${aspect !== 'auto' ? getAspectClass() : ''}`}>
       <div 
         className="fb-video" 
         data-href={videoUrl} 
         data-width={width} 
         data-show-text={showText}
+        data-allowfullscreen={allowFullscreen}
+        data-autoplay={autoplay}
+        data-show-captions={showCaptions}
+        data-lazy={lazy}
       >
-        <blockquote cite={videoUrl} className="fb-xfbml-parse-ignore">
-          <a href={videoUrl}>{title}</a>
-          <p>{description}</p>
-          Posted by <a href={pageUrl}>{pageName}</a> on {postDate}
-        </blockquote>
+        {!isVideoParsed && (
+          <blockquote cite={videoUrl} className="fb-xfbml-parse-ignore">
+            <a href={videoUrl}>{title}</a>
+            {description && <p>{description}</p>}
+            {videoInfo && (
+              <>Posted by <a href={pageUrl}>{pageName}</a> on {postDate}</>
+            )}
+          </blockquote>
+        )}
       </div>
     </div>
   )
