@@ -39,7 +39,14 @@ export default function FeaturedVideos() {
           {featuredVideos.map((video) => (
             <div key={video.id} className="space-y-4">
               <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                <FacebookVideoEmbed videoUrl={video.url} height="100%" showText={false} />
+                <FacebookVideoEmbed 
+                  videoUrl={video.url} 
+                  width="100%" 
+                  showText={false}
+                  title={video.title}
+                  description={video.title}
+                  postDate={video.date}
+                />
               </div>
               <div>
                 <h3 className="text-xl font-bold">{video.title}</h3>

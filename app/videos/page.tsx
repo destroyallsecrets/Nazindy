@@ -248,14 +248,12 @@ export default function VideosPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-4">
                       {category.videos.map((video) => (
                         <div key={video.id} className="space-y-4">
-                          <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden">
-                            <FacebookVideoEmbed 
-                              videoUrl={video.url} 
-                              height="100%" 
-                              showText={false}
-                              title={video.title}
-                              description={`${category.title} - ${video.date}`}
-                            />
+                          <div className="fb-video" data-href={video.url} data-width="100%" data-show-text="false">
+                            <blockquote cite={video.url} className="fb-xfbml-parse-ignore">
+                              <a href={video.url}>{video.title}</a>
+                              <p>{`${category.title} - ${video.date}`}</p>
+                              Posted by <a href="https://www.facebook.com/NazareneMissionaryBaptistChurch">Nazarene MBC INDY</a> on {video.date}
+                            </blockquote>
                           </div>
                           <div>
                             <h3 className="text-xl font-bold">{video.title}</h3>
