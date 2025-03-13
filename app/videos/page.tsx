@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { Search, Filter, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import FacebookVideoEmbed from "@/components/facebook-video-embed"
+import Script from "next/script"
 
 // Define video categories and their videos
 const videoCategories = [
@@ -93,6 +94,26 @@ export default function VideosPage() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [filteredCategories, setFilteredCategories] = useState(videoCategories)
+  const [fbSDKLoaded, setFbSDKLoaded] = useState(false)
+
+  // Initialize Facebook SDK
+  const initFacebookSDK = useCallback(() => {
+    if (typeof window !== 'undefined' && window.FB) {
+      (window.FB as any).XFBML.parse();
+      setFbSDKLoaded(true);
+    }
+  }, []);
+
+  // Re-parse Facebook embeds when filtered content changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.FB && fbSDKLoaded) {
+      // Small delay to ensure DOM is updated
+      const timer = setTimeout(() => {
+        (window.FB as any).XFBML.parse();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [filteredCategories, fbSDKLoaded]);
 
   // Filter videos based on search term and selected category
   useEffect(() => {
@@ -131,6 +152,13 @@ export default function VideosPage() {
 
   return (
     <main className="min-h-screen">
+      {/* Facebook SDK Script */}
+      <Script
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v17.0"
+        strategy="lazyOnload"
+        onLoad={initFacebookSDK}
+      />
+
       {/* Hero Section */}
       <section className="relative py-20 bg-gray-900 text-white">
         <div className="absolute inset-0 z-0 opacity-30">
