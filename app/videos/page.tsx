@@ -27,7 +27,7 @@ const predefinedCategories: VideoCategory[] = [
         id: "sermon2",
         title: "Walking in God's Purpose",
         date: "March 31, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/0987654321",
+        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
         description: "Learning how to discover and fulfill God's purpose for your life",
         thumbnail: "https://placehold.co/320x180/darkblue/white?text=Gods+Purpose"
       }
