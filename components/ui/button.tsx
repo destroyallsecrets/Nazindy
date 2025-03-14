@@ -54,3 +54,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button"
 
 export { Button, buttonVariants }
+
+import React from "react";
+
+export const Button = ({ asChild, children }) => {
+  const Component = asChild ? 'span' : 'button';
+  return <Component className="btn">{children}</Component>;
+};
