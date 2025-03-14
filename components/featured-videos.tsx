@@ -9,18 +9,21 @@ const featuredVideos = [
     title: "Sunday Worship Service",
     date: "April 7, 2024",
     url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1234567890",
+    embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F1234567890%2F&show_text=false&width=560&t=0",
   },
   {
     id: "featured2",
     title: "Bible Study - Book of Romans",
     date: "April 3, 2024",
     url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/5566778899",
+    embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F5566778899%2F&show_text=false&width=560&t=0",
   },
   {
     id: "featured3",
     title: "Easter Sunday Service",
     date: "March 31, 2024",
     url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1357924680",
+    embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F1357924680%2F&show_text=false&width=560&t=0",
   },
 ]
 

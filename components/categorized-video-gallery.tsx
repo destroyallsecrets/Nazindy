@@ -15,6 +15,7 @@ type VideoItem = {
   date: string
   url: string
   description?: string
+  embedUrl?: string
 }
 
 type VideoCategory = {
@@ -190,4 +191,4 @@ export default function CategorizedVideoGallery({
       </section>
     </div>
   )
-} 
+}

@@ -8,6 +8,7 @@ import FacebookVideoLayout, { VideoCategory } from "@/components/facebook-video-
 import ManualVideoManager from "@/components/manual-video-manager"
 import { loadVideoCategories, mergeVideoCategories, saveVideoCategories } from "@/lib/video-storage"
 import { Settings } from "lucide-react"
+import VideoEmbed from "@/components/video-embed"
 
 // Predefined categories with videos
 const predefinedCategories: VideoCategory[] = [
@@ -21,6 +22,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "The Power of Faith",
         date: "April 7, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719/",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F658991209844719%2F&show_text=false&width=560&t=0",
         description: "A powerful message on the importance of faith in our daily lives",
         thumbnail: "https://placehold.co/320x180/darkblue/white?text=Sermon"
       },
@@ -29,6 +31,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "Walking in God's Purpose",
         date: "March 31, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F658991209844719%2F&show_text=false&width=560&t=0",
         description: "Learning how to discover and fulfill God's purpose for your life",
         thumbnail: "https://placehold.co/320x180/darkblue/white?text=Gods+Purpose"
       }
@@ -44,6 +47,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "Book of Romans - Part 3",
         date: "April 3, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/5566778899",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F5566778899%2F&show_text=false&width=560&t=0",
         description: "Continuing our study of Romans focusing on righteousness by faith",
         thumbnail: "https://placehold.co/320x180/darkgreen/white?text=Romans+Study"
       },
@@ -52,6 +56,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "Book of Romans - Part 2",
         date: "March 27, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/9988776655",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F9988776655%2F&show_text=false&width=560&t=0",
         description: "Understanding Paul's message to the Romans",
         thumbnail: "https://placehold.co/320x180/darkgreen/white?text=Romans+Part+2"
       },
@@ -60,8 +65,18 @@ const predefinedCategories: VideoCategory[] = [
         title: "Bible Study - 2 Peter 1:1-4",
         date: "April 10, 2024",
         url: "https://www.youtube.com/watch?v=4BgtHZaT8sY",
+        embedUrl: "https://www.youtube.com/embed/4BgtHZaT8sY",
         description: "A study on 2 Peter 1:1-4 focusing on God's precious promises",
         thumbnail: "https://placehold.co/320x180/darkgreen/white?text=2+Peter+Study"
+      },
+      {
+        id: "biblestudy4",
+        title: "Bible Study - Faith and Perseverance",
+        date: "April 17, 2024",
+        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719/",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F658991209844719%2F&show_text=false&width=560&t=0",
+        description: "A special Bible study session exploring faith and perseverance in our Christian walk",
+        thumbnail: "https://placehold.co/320x180/darkgreen/white?text=Bible+Study"
       }
     ],
   },
@@ -75,6 +90,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "Choir Performance - Amazing Grace",
         date: "March 17, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/1472583690",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F1472583690%2F&show_text=false&width=560&t=0",
         description: "Our church choir performs Amazing Grace",
         thumbnail: "https://placehold.co/320x180/maroon/white?text=Choir"
       },
@@ -83,6 +99,7 @@ const predefinedCategories: VideoCategory[] = [
         title: "Praise Team - Worthy Is the Lamb",
         date: "April 7, 2024",
         url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/3344556677",
+        embedUrl: "https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F3344556677%2F&show_text=false&width=560&t=0",
         description: "Our praise team leads worship with 'Worthy Is the Lamb'",
         thumbnail: "https://placehold.co/320x180/maroon/white?text=Praise+Team"
       }
@@ -203,10 +220,19 @@ export default function VideosPage() {
               >
                 {filteredVideos.length > 0 ? (
                   <div className="space-y-8">
-                    <VideoPlayer 
-                      videos={filteredVideos}
-                      showRelated={true}
-                    />
+                    {filteredVideos.map((video) => (
+                      <div key={video.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                        <VideoEmbed 
+                          embedUrl={video.embedUrl}
+                          title={video.title}
+                        />
+                        <div className="p-4">
+                          <h3 className="text-xl font-semibold mb-2">{video.title}</h3>
+                          <p className="text-gray-600 mb-2">{video.description}</p>
+                          <p className="text-sm text-gray-500">{video.date}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 ) : (
                   <div className="text-center py-12 bg-white rounded-lg shadow">
@@ -236,7 +262,7 @@ export default function VideosPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center"
-                    >
+                    ></a>
                       <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path
                           fillRule="evenodd"
