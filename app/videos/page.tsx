@@ -59,7 +59,7 @@ const predefinedCategories: VideoCategory[] = [
         id: "biblestudy3",
         title: "Bible Study - 2 Peter 1:1-4",
         date: "April 10, 2024",
-        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719",
+        url: "https://www.youtube.com/watch?v=4BgtHZaT8sY",
         description: "A study on 2 Peter 1:1-4 focusing on God's precious promises",
         thumbnail: "https://placehold.co/320x180/darkgreen/white?text=2+Peter+Study"
       }
