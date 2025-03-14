@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import FacebookSDKProvider from "@/components/facebook-sdk-provider"
 import VideoPlayer, { VideoItem } from "@/components/video-player"
 import FacebookVideoLayout, { VideoCategory } from "@/components/facebook-video-layout"
-import axios from "axios"
-import * as cheerio from "cheerio"
+import ManualVideoManager from "@/components/manual-video-manager"
+import { loadVideoCategories, mergeVideoCategories, saveVideoCategories } from "@/lib/video-storage"
+import { Settings } from "lucide-react"
 
 // Predefined categories with videos
 const predefinedCategories: VideoCategory[] = [
@@ -89,75 +90,42 @@ const predefinedCategories: VideoCategory[] = [
   },
 ];
 
-// Function to fetch videos using web scraping
-async function fetchFacebookVideos(): Promise<VideoCategory[]> {
-  try {
-    const response = await axios.get("https://www.facebook.com/NazareneMissionaryBaptistChurch/videos");
-    const $ = cheerio.load(response.data);
-    
-    const videos: VideoItem[] = [];
-    
-    $("div[data-pagelet='Video']").each((index: number, element: any) => {
-      const title = $(element).find("h2").text();
-      const url = $(element).find("a").attr("href");
-      const date = $(element).find("span").text();
-      const description = $(element).find("p").text();
-      const thumbnail = $(element).find("img").attr("src"); // Get thumbnail URL
-      
-      videos.push({
-        id: `video${index}`,
-        title,
-        date,
-        url: url ? `https://www.facebook.com${url}` : "",
-        description,
-        thumbnail,
-      });
-    });
-    
-    // If we got videos from Facebook, add them to a special category
-    if (videos.length > 0) {
-      const scrapedCategory: VideoCategory = {
-        id: "facebook-videos",
-        title: "Recent Videos",
-        description: "Recently posted videos from our Facebook page",
-        videos,
-      };
-      
-      // Return both predefined and scraped categories
-      return [...predefinedCategories, scrapedCategory];
-    }
-    
-    // If no videos were scraped, just return the predefined categories
-    return predefinedCategories;
-  } catch (error) {
-    console.error("Error fetching Facebook videos:", error);
-    // On error, just return the predefined categories
-    return predefinedCategories;
-  }
-}
-
 export default function VideosPage() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null)
   const [searchTerm, setSearchTerm] = useState("")
   const [videoCategories, setVideoCategories] = useState<VideoCategory[]>(predefinedCategories)
   const [isLoading, setIsLoading] = useState(true)
+  const [showVideoManager, setShowVideoManager] = useState(false)
 
+  // Load categories including user's manually added videos
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        setIsLoading(true);
-        const fetchedCategories = await fetchFacebookVideos();
-        setVideoCategories(fetchedCategories);
+        setIsLoading(true)
+        
+        // Load saved categories from localStorage
+        const savedCategories = loadVideoCategories()
+        
+        // Merge with predefined categories
+        const mergedCategories = mergeVideoCategories(predefinedCategories, savedCategories)
+        
+        setVideoCategories(mergedCategories)
       } catch (err) {
-        console.error("Failed to load videos:", err);
-        // If there's an error, we still have the predefined categories
+        console.error("Failed to load videos:", err)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    };
+    }
     
-    loadVideos();
-  }, []);
+    loadVideos()
+  }, [])
+  
+  // Handle saving updated categories
+  const handleSaveCategories = (updatedCategories: VideoCategory[]) => {
+    setVideoCategories(updatedCategories)
+    saveVideoCategories(updatedCategories)
+    setShowVideoManager(false)
+  }
   
   // Get the selected category or all videos if no category selected
   const selectedCategory = selectedCategoryId 
@@ -167,37 +135,60 @@ export default function VideosPage() {
   // Filtered videos based on selected category and search term
   const filteredVideos = useMemo(() => {
     // First, get videos from the selected category or all categories
-    let videos: VideoItem[] = [];
+    let videos: VideoItem[] = []
     
     if (selectedCategory) {
       // If a category is selected, get videos from only that category
-      videos = [...selectedCategory.videos];
+      videos = [...selectedCategory.videos]
     } else {
       // Otherwise, get videos from all categories
-      videos = videoCategories.flatMap(category => category.videos);
+      videos = videoCategories.flatMap(category => category.videos)
     }
     
     // Then, filter by search term if provided
     if (searchTerm) {
-      const term = searchTerm.toLowerCase();
+      const term = searchTerm.toLowerCase()
       videos = videos.filter(video => 
         video.title.toLowerCase().includes(term) || 
         (video.description && video.description.toLowerCase().includes(term))
-      );
+      )
     }
     
-    return videos;
-  }, [selectedCategory, searchTerm]);
+    return videos
+  }, [selectedCategory, searchTerm, videoCategories])
 
   return (
     <main className="min-h-screen">
       <FacebookSDKProvider version="v22.0" language="en_US">
         <div className="bg-gray-50">
           <div className="container mx-auto py-6 px-4">
-            <h1 className="text-3xl md:text-4xl font-bold mb-1">Video Library</h1>
-            <p className="text-gray-600 mb-6">
-              Watch sermons, Bible studies, and special events from Nazarene Missionary Baptist Church
-            </p>
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold mb-1">Video Library</h1>
+                <p className="text-gray-600">
+                  Watch sermons, Bible studies, and special events from Nazarene Missionary Baptist Church
+                </p>
+              </div>
+              
+              <Button
+                variant="outline"
+                className="flex items-center gap-2"
+                onClick={() => setShowVideoManager(!showVideoManager)}
+              >
+                <Settings className="h-4 w-4" />
+                {showVideoManager ? "Hide Manager" : "Manage Videos"}
+              </Button>
+            </div>
+            
+            {/* Video Manager */}
+            {showVideoManager && (
+              <div className="mb-8">
+                <ManualVideoManager 
+                  categories={videoCategories}
+                  onSave={handleSaveCategories}
+                />
+              </div>
+            )}
             
             {isLoading ? (
               <div className="flex justify-center items-center py-12">
