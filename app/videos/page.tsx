@@ -19,7 +19,7 @@ const predefinedCategories: VideoCategory[] = [
         id: "sermon1",
         title: "The Power of Faith",
         date: "April 7, 2024",
-        url: `<iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FNazareneMissionaryBaptistChurch%2Fvideos%2F658991209844719%2F&show_text=false&width=560&t=0" width="560" height="314" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`,
+        url: "https://www.facebook.com/NazareneMissionaryBaptistChurch/videos/658991209844719/",
         description: "A powerful message on the importance of faith in our daily lives",
         thumbnail: "https://placehold.co/320x180/darkblue/white?text=Sermon"
       },
