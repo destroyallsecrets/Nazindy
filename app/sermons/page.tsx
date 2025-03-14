@@ -3,37 +3,15 @@ import Image from "next/image"
 import { Search, Calendar, Clock, Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import FacebookVideoEmbed from "@/components/facebook-video-embed"
-import FacebookEmbed from "@/components/facebook-embed"
+import FacebookEmbed from "@/components/facebook/facebook-embed"
 
 export default function SermonsPage() {
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20 bg-gray-900 text-white">
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          {/* Video background */}
-          <video 
-            className="w-full h-full object-cover opacity-30"
-            autoPlay 
-            muted 
-            loop 
-            playsInline
-          >
-            <source src="/sermon-background.mp4" type="video/mp4" />
-            {/* Fallback to church logo if video can't play */}
-            <div className="w-full h-full flex items-center justify-center bg-primary/10">
-              <Image 
-                src="/logo.png" 
-                alt="Nazarene Missionary Baptist Church Logo" 
-                width={400} 
-                height={400} 
-                className="object-contain max-w-md opacity-30"
-              />
-            </div>
-          </video>
-          {/* Additional overlay for better text contrast */}
-          <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 z-0 opacity-30">
+          <Image src="/placeholder.svg?height=800&width=1600" alt="Sermons Background" fill className="object-cover" />
         </div>
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="max-w-3xl">

@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Facebook, Instagram, Youtube } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import FacebookFeed from "@/components/facebook-feed"
+import FacebookFeed from "@/components/facebook/facebook-feed"
 
 export default function ConnectPage() {
   return (

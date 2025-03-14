@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import FacebookEmbed from "@/components/facebook-embed"
+import FacebookEmbed from "@/components/facebook/facebook-embed"
 
 export default function EventsPage() {
   return (
